@@ -1,4 +1,10 @@
-== Build
+# USE Syllables
+
+This piece of code extracted from HarfBuzz, uses the Universal Shaping
+Engine implementation there to segment a list of Unicode codepoints into
+syllables.
+
+## Build
 
 Build it by just running:
 
@@ -11,7 +17,7 @@ syllable 0..1 standard_cluster
 syllable 1..3 standard_cluster
 syllable 3..6 standard_cluster
 
-== Caveats
+## Caveats
 
  * HarfBuzz's USE implementation might have more relaxed grammar than the
 spec.
