@@ -320,22 +320,17 @@ static const int use_syllable_machine_en_main = 4;
 
 #define found_syllable(syllable_type) \
   HB_STMT_START { \
-    if (0) fprintf (stderr, "syllable %d..%d %s\n", last, p+1, #syllable_type); \
-    for (unsigned int i = last; i < p+1; i++) \
-      info[i].syllable() = (syllable_serial << 4) | syllable_type; \
+    if (1) fprintf (stderr, "syllable %d..%d %s\n", last, p+1, #syllable_type); \
     last = p+1; \
-    syllable_serial++; \
-    if (unlikely (syllable_serial == 16)) syllable_serial = 1; \
   } HB_STMT_END
 
 static void
-find_syllables (hb_buffer_t *buffer)
+find_syllables (unsigned char *categories, unsigned int len)
 {
   unsigned int p, pe, eof, ts HB_UNUSED, te, act;
   int cs;
-  hb_glyph_info_t *info = buffer->info;
   
-#line 339 "hb-ot-shape-complex-use-machine.hh"
+#line 334 "hb-ot-shape-complex-use-machine.hh"
 	{
 	cs = use_syllable_machine_start;
 	ts = 0;
@@ -343,16 +338,16 @@ find_syllables (hb_buffer_t *buffer)
 	act = 0;
 	}
 
-#line 162 "hb-ot-shape-complex-use-machine.rl"
+#line 157 "hb-ot-shape-complex-use-machine.rl"
 
 
   p = 0;
-  pe = eof = buffer->len;
+  pe = eof = len;
 
   unsigned int last = 0;
   unsigned int syllable_serial = 1;
   
-#line 356 "hb-ot-shape-complex-use-machine.hh"
+#line 351 "hb-ot-shape-complex-use-machine.hh"
 	{
 	int _slen;
 	int _trans;
@@ -366,16 +361,16 @@ _resume:
 #line 1 "NONE"
 	{ts = p;}
 	break;
-#line 370 "hb-ot-shape-complex-use-machine.hh"
+#line 365 "hb-ot-shape-complex-use-machine.hh"
 	}
 
 	_keys = _use_syllable_machine_trans_keys + (cs<<1);
 	_inds = _use_syllable_machine_indicies + _use_syllable_machine_index_offsets[cs];
 
 	_slen = _use_syllable_machine_key_spans[cs];
-	_trans = _inds[ _slen > 0 && _keys[0] <=( info[p].use_category()) &&
-		( info[p].use_category()) <= _keys[1] ?
-		( info[p].use_category()) - _keys[0] : _slen ];
+	_trans = _inds[ _slen > 0 && _keys[0] <=( categories[p]) &&
+		( categories[p]) <= _keys[1] ?
+		( categories[p]) - _keys[0] : _slen ];
 
 _eof_trans:
 	cs = _use_syllable_machine_trans_targs[_trans];
@@ -468,7 +463,7 @@ _eof_trans:
 #line 137 "hb-ot-shape-complex-use-machine.rl"
 	{act = 8;}
 	break;
-#line 472 "hb-ot-shape-complex-use-machine.hh"
+#line 467 "hb-ot-shape-complex-use-machine.hh"
 	}
 
 _again:
@@ -477,7 +472,7 @@ _again:
 #line 1 "NONE"
 	{ts = 0;}
 	break;
-#line 481 "hb-ot-shape-complex-use-machine.hh"
+#line 476 "hb-ot-shape-complex-use-machine.hh"
 	}
 
 	if ( ++p != pe )
@@ -493,7 +488,7 @@ _again:
 
 	}
 
-#line 171 "hb-ot-shape-complex-use-machine.rl"
+#line 166 "hb-ot-shape-complex-use-machine.rl"
 
 }
 

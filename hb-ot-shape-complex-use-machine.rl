@@ -142,27 +142,22 @@ main := |*
 
 #define found_syllable(syllable_type) \
   HB_STMT_START { \
-    if (0) fprintf (stderr, "syllable %d..%d %s\n", last, p+1, #syllable_type); \
-    for (unsigned int i = last; i < p+1; i++) \
-      info[i].syllable() = (syllable_serial << 4) | syllable_type; \
+    if (1) fprintf (stderr, "syllable %d..%d %s\n", last, p+1, #syllable_type); \
     last = p+1; \
-    syllable_serial++; \
-    if (unlikely (syllable_serial == 16)) syllable_serial = 1; \
   } HB_STMT_END
 
 static void
-find_syllables (hb_buffer_t *buffer)
+find_syllables (unsigned char *categories, unsigned int len)
 {
   unsigned int p, pe, eof, ts HB_UNUSED, te, act;
   int cs;
-  hb_glyph_info_t *info = buffer->info;
   %%{
     write init;
-    getkey info[p].use_category();
+    getkey categories[p];
   }%%
 
   p = 0;
-  pe = eof = buffer->len;
+  pe = eof = len;
 
   unsigned int last = 0;
   unsigned int syllable_serial = 1;
