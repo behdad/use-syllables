@@ -32,7 +32,7 @@
 #include "hb-private.hh"
 
 
-#include "hb-ot-shape-complex-private.hh"
+//#include "hb-ot-shape-complex-private.hh"
 
 
 #define USE_TABLE_ELEMENT_TYPE uint8_t
